@@ -1,0 +1,50 @@
+# Render Blueprint for the Compass Market Risk + Operational Resilience app.
+# Two web services: a FastAPI backend and a Next.js frontend.
+# The frontend proxies /api/* to the backend (server-side rewrite), so the browser only
+# ever talks to the frontend origin — no CORS configuration needed.
+#
+# Deploy: push this repo to GitHub, then in Render: New + → Blueprint → pick the repo.
+# After the first deploy, set the two secrets/URLs marked "sync: false" (see DEPLOY_RENDER.md).
+
+services:
+  # ---------------------------------------------------------------- Backend
+  - type: web
+    name: compass-backend
+    runtime: python
+    plan: free
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+      # Set your Groq key in the Render dashboard (never committed).
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-120b
+      # Render has no corporate TLS interception — verify certificates normally.
+      - key: GROQ_VERIFY_SSL
+        value: "true"
+      # The public frontend origin (used for CORS if the browser ever calls the API directly).
+      - key: FRONTEND_ORIGINS
+        sync: false
+
+  # --------------------------------------------------------------- Frontend
+  - type: web
+    name: compass-frontend
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start -- -p $PORT -H 0.0.0.0
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Full public URL of the backend service, e.g. https://compass-backend.onrender.com
+      # Set this in the dashboard after the backend deploys, then redeploy the frontend.
+      - key: NEXT_PUBLIC_API_BASE
+        sync: false

@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: theme(colors.canvas);
+  color: theme(colors.ink.DEFAULT);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  @apply bg-panel border border-line rounded-lg;
+}
+
+.section-title {
+  @apply text-sm font-semibold uppercase tracking-wide text-ink-muted;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin scrollbars for dense tables */
+.scroll-thin::-webkit-scrollbar { height: 8px; width: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #cbd2dc; border-radius: 4px; }
