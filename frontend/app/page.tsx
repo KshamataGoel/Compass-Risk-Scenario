@@ -246,19 +246,22 @@ export default function Page() {
   const portfolioAvailable = result?.portfolio?.available;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6">
-      <header className="mb-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-lg font-bold text-white">MR</div>
-          <div>
-            <h1 className="text-2xl font-bold text-ink">Market Risk Scenario Simulation</h1>
-            <p className="text-sm text-ink-muted">
-              Deterministic analysis traceable to the approved Market Risk data model. The LLM is a language layer only.
-            </p>
+    <div className="min-h-screen">
+      {/* Genpact-style header bar */}
+      <header className="border-b-2 border-accent bg-ink">
+        <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+          <span className="font-display text-base font-semibold lowercase tracking-tight text-slate-400">genpact</span>
+          <div className="h-8 w-px bg-white/15" />
+          <div className="leading-none">
+            <div className="font-display text-2xl font-extrabold tracking-tight text-white">Risk Scenario Simulation</div>
+            <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent">
+              Market Risk &amp; Operational Resilience
+            </div>
           </div>
         </div>
       </header>
 
+      <main className="mx-auto max-w-6xl px-4 py-6">
       {configError && (
         <Card className="mb-4 p-4">
           <p className="text-sm text-negative">
@@ -375,6 +378,7 @@ export default function Page() {
         entries={lineage?.entries || null}
         onClose={() => setLineage(null)}
       />
-    </main>
+      </main>
+    </div>
   );
 }

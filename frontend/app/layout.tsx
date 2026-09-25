@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Market Risk Scenario Simulation",
+  title: "Risk Scenario Simulation",
   description: "Deterministic Market Risk analysis traceable to the approved data model.",
 };
 

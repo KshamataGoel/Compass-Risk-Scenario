@@ -71,6 +71,8 @@ export function SimulationControls({
   classification: RiskStripeClassification | null;
   hideMarketControls: boolean;
 }) {
+  // Manual dropdown controls are hidden — the flow is type a request and Run.
+  const showControls = false;
   const stripeLabel = classification
     ? (classification.risk_stripe === "OPERATIONAL_RESILIENCE" ? "Operational Resilience" : "Market Risk")
     : null;
@@ -94,7 +96,7 @@ export function SimulationControls({
           onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) onRun(); }}
         />
         <p className="mt-1 text-[11px] text-ink-muted">
-          Type a request and click Run — it fills the controls below. Leave blank to use the controls as set. (Ctrl/Cmd+Enter to run.)
+          Just type your request and click Run — the risk stripe and parameters are detected automatically. (Ctrl/Cmd+Enter to run.)
         </p>
         {interpretation && (
           <p className="mt-2 text-xs text-ink">
@@ -119,7 +121,7 @@ export function SimulationControls({
         </p>
       )}
 
-      {!hideMarketControls && (
+      {!hideMarketControls && showControls && (
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Field label="Portfolio Type">
           <NativeSelect
@@ -160,7 +162,7 @@ export function SimulationControls({
       </div>
       )}
 
-      {!hideMarketControls && horizonUnavailable && (
+      {!hideMarketControls && showControls && horizonUnavailable && (
         <p className="mt-3 text-xs text-warn">
           This horizon needs more trading snapshots than the workbook contains; pick a smaller horizon.
         </p>
@@ -170,9 +172,6 @@ export function SimulationControls({
         <Button onClick={onRun} disabled={running || parsing}>
           {parsing ? "Interpreting…" : running ? "Running…" : "Run Scenario Simulation"}
         </Button>
-        <span className="text-xs text-ink-muted">
-          Deterministic Python processing runs first. The LLM is a language layer only (parsing your request and the final summary).
-        </span>
       </div>
     </Card>
   );

@@ -5,20 +5,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Genpact palette (matches RegComplianceApp).
         ink: {
-          DEFAULT: "#0b1220",
+          DEFAULT: "#181C23",
           muted: "#5b6472",
         },
         panel: "#ffffff",
-        canvas: "#f4f6fa",
-        accent: "#0f4c81",
+        canvas: "#f5f5f5",
+        accent: "#FFAD28",        // Genpact amber
+        "accent-dark": "#e09820",
         positive: "#0f7b57",
         negative: "#b42318",
         warn: "#b45309",
-        line: "#e4e8ef",
+        line: "#e8e8e8",
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "Segoe UI", "Arial", "sans-serif"],
+        sans: ["Segoe UI", "system-ui", "-apple-system", "Arial", "sans-serif"],
+        display: ["Montserrat", "Segoe UI", "system-ui", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
     },
